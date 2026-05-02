@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading...</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Fake loading screen */
+    #loading {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 20px;
+    }
+
+    .dot {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Video hidden at start */
+    #videoContainer {
+      display: none;
+    }
+
+    video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- FAKE LOADING -->
+<div id="loading">
+  Loading page
+  <div class="dot">.</div>
+  <div class="dot">.</div>
+  <div class="dot">.</div>
+</div>
+
+<!-- VIDEO -->
+<div id="videoContainer">
+  <video id="vid" autoplay muted>
+    <source src="shimmy.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+  const loading = document.getElementById("loading");
+  const videoContainer = document.getElementById("videoContainer");
+  const vid = document.getElementById("vid");
+
+  // Wait 3 seconds then "break" the loading screen 😈
+  setTimeout(() => {
+    loading.style.display = "none";
+    videoContainer.style.display = "block";
+
+    // try fullscreen
+    document.documentElement.requestFullscreen?.();
+
+    // unmute after start
+    vid.muted = false;
+    vid.volume = 1.0;
+
+    vid.play();
+  }, 3000);
+</script>
+
+</body>
+</html>
